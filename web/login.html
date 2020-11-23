@@ -21,24 +21,29 @@
 
     <body>
         
-        <form class="form-signin">
+        <form class="form-signin" method="POST" action="Login">
             <div class="text-center mb-4">
                 <h1 class="h3 mb-3 font-weight-normal">Login</h1>
                 <p>Entre já com sua conta da Tech Store. <a href="cadastrar_usuario.html">Não possui uma conta? Registre-se agora.</a></p>
             </div>
 
             <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email" name="email" required autofocus>
                 <label for="inputEmail">Email</label>
             </div>
 
             <div class="form-label-group">
-                <input type="password" id="inputSenha" class="form-control" placeholder="Senha" required>
+                <input type="password" id="inputSenha" class="form-control" placeholder="Senha" name="senha" required>
                 <label for="inputSenha">Senha</label>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="funcionario" name="funcionario"> Eu sou um funcionário
+                </label>
             </div>
             
             <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-            <p class="mt-5 mb-3 text-muted text-center">&copy; 2020</p>
         </form>
 
     </body>
