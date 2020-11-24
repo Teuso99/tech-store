@@ -45,7 +45,7 @@ public class Login extends HttpServlet {
                     
                     if(checked == null)
                     {
-                        dao.createPreparedStatement("select 1 from cliente where email=? and senha=?");
+                        dao.createPreparedStatement("select nome from cliente where email=? and senha=?");
                         dao.setString(1, request.getParameter("email"));
                         dao.setString(2, request.getParameter("senha"));
                         ResultSet rs = dao.executeQuery();
@@ -53,9 +53,10 @@ public class Login extends HttpServlet {
                         if(rs.next())
                         {
                             String tipo = "cliente";
+                            String nome = rs.getString("nome");
                             request.getSession().setAttribute("email", request.getParameter("email"));
                             request.getSession().setAttribute("tipo", tipo);
-                            out.println("Logado como cliente");
+                            request.getSession().setAttribute("nome", nome);
                             
                             response.sendRedirect("index.html");
                         }
@@ -69,7 +70,7 @@ public class Login extends HttpServlet {
                     }
                     else
                     {
-                        dao.createPreparedStatement("select 1 from funcionario where email=? and senha=?");
+                        dao.createPreparedStatement("select nome from funcionario where email=? and senha=?");
                         dao.setString(1, request.getParameter("email"));
                         dao.setString(2, request.getParameter("senha"));
                         ResultSet rs = dao.executeQuery();
@@ -79,7 +80,7 @@ public class Login extends HttpServlet {
                             String tipo = "funcionario";
                             request.getSession().setAttribute("email", request.getParameter("email"));
                             request.getSession().setAttribute("tipo", tipo);
-                            out.println("Logado como funcionario");
+                            request.getSession().setAttribute("nome", rs.getString("nome"));
                             
                             response.sendRedirect("index.html");
                         }

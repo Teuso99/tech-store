@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,8 +7,13 @@
         <title></title>
     </head>
     <body>
+        <%
+            String usuario=(String)session.getAttribute("nome");
+            String tipo=(String)session.getAttribute("tipo");
+        %>
+        
         <nav class="navbar navbar-expand-md navbar-dark fixed-top">
-            <a class="navbar-brand" href="#">Tech Store</a>
+            <a class="navbar-brand" href="index.html">Tech Store</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -32,9 +38,35 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" href="#">Carrinho</a>
                     </li>
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-outline-light" id="btnLogin">Login</button>
-                    </li>
+                    
+                    <c:choose>
+                        <c:when test = "${tipo == 'cliente'}">
+                            <li class="nav-item dropleft">
+                                <a class="nav-link dropdown-toggle text-light" href="#" id="dropdown01" 
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><% out.print(usuario); %></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                    <a class="dropdown-item" href="Logout">Logout</a>
+                                </div>
+                            </li>
+                        </c:when>
+                        
+                        <c:when test = "${tipo == 'funcionario'}">
+                            <li class="nav-item dropdown mr-sm-2">
+                                <a class="nav-link dropdown-toggle text-light" href="#" id="dropdown01" 
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><% out.print(usuario); %></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                    <button class="dropdown-item">Logout</button>
+                                </div>
+                            </li>
+                        </c:when>
+                        
+                        <c:otherwise>
+                            <li class="nav-item">
+                                <button type="button" class="btn btn-outline-light" id="btnLogin">Login</button>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+                    
                 </ul>
             </div>
         </nav>
