@@ -82,7 +82,7 @@ public class Login extends HttpServlet {
                             request.getSession().setAttribute("tipo", tipo);
                             request.getSession().setAttribute("nome", rs.getString("nome"));
                             
-                            response.sendRedirect("index.html");
+                            response.sendRedirect("admin.html");
                         }
                         else
                         {
