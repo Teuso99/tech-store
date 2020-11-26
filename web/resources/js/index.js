@@ -7,11 +7,3 @@ $.ajax("home.jsp").done(function (data)
 {
     $('#home').html(data);    
 })
-
-window.onload = function()
-{ 
-    document.getElementById("btnLogin").onclick = function ()
-    {
-        location.href = "login.html";
-    }; 
-};

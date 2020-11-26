@@ -4,6 +4,22 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            #userMenu
+            {
+                min-width: 20px !important;
+            }
+        </style>
+
+        <script>
+            window.onload = function()
+            { 
+                document.getElementById("btnLogin").onclick = function ()
+                {
+                    location.href = "login.html";
+                }; 
+            };
+        </script>
         <title></title>
     </head>
     <body>
@@ -41,21 +57,21 @@
                     
                     <c:choose>
                         <c:when test = "${tipo == 'cliente'}">
-                            <li class="nav-item dropleft">
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-light" href="#" id="dropdown01" 
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><% out.print(usuario); %></a>
-                                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <div class="dropdown-menu" aria-labelledby="dropdown01" id="userMenu">
                                     <a class="dropdown-item" href="Logout">Logout</a>
                                 </div>
                             </li>
                         </c:when>
                         
                         <c:when test = "${tipo == 'funcionario'}">
-                            <li class="nav-item dropdown mr-sm-2">
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-light" href="#" id="dropdown01" 
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><% out.print(usuario); %></a>
-                                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                    <button class="dropdown-item">Logout</button>
+                                <div class="dropdown-menu" aria-labelledby="dropdown01" id="userMenu">
+                                    <a class="dropdown-item" href="Logout">Logout</a>
                                 </div>
                             </li>
                         </c:when>
