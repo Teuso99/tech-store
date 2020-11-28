@@ -13,8 +13,8 @@
                 <!-- Grid de produtos -->
                 <div class="row row-cols-1 row-cols-md-3">
                     <!-- Produtos -->
-                    <div class="col mb-4">
-                        <div class="card mr-sm-2" style="width: 18rem;">
+                    <div class="col mb-2">
+                        <div class="card mr-sm-4" style="width: 14rem;">
                             <img src="resources/img/placeholder4.jpg" class="card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Cartela 30 ovos</h5>
@@ -24,8 +24,8 @@
                         </div>
                     </div>
                     
-                    <div class="col mb-4">
-                        <div class="card mr-sm-2" style="width: 18rem;">
+                    <div class="col mb-2">
+                        <div class="card mr-sm-4" style="width: 14rem;">
                             <img src="resources/img/placeholder4.jpg" class="card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">Naruto N64</h5>
@@ -35,8 +35,8 @@
                         </div>
                     </div>
                     
-                    <div class="col mb-4">
-                        <div class="card mr-sm-2" style="width: 18rem;">
+                    <div class="col mb-2">
+                        <div class="card mr-sm-4" style="width: 14rem;">
                             <img src="resources/img/placeholder4.jpg" class="card-img-top">
                             <div class="card-body">
                                 <h5 class="card-title">KEKW</h5>

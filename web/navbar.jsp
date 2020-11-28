@@ -11,15 +11,6 @@
             }
         </style>
 
-        <script>
-            window.onload = function()
-            { 
-                document.getElementById("btnLogin").onclick = function ()
-                {
-                    location.href = "login.html";
-                }; 
-            };
-        </script>
         <title></title>
     </head>
     <body>
@@ -77,6 +68,16 @@
                         </c:when>
                         
                         <c:otherwise>
+                            <script>
+                                window.onload = function()
+                                { 
+                                    document.getElementById("btnLogin").onclick = function ()
+                                    {
+                                        location.href = "login.html";
+                                    }; 
+                                };
+                            </script>
+                            
                             <li class="nav-item">
                                 <button type="button" class="btn btn-outline-light" id="btnLogin">Login</button>
                             </li>

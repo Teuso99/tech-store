@@ -2,3 +2,11 @@ $.ajax("navbar.jsp").done(function (data)
 {
     $('#navbar').html(data);    
 })
+
+window.onload = function()
+{
+    document.getElementById("adicionarProduto").onclick = function ()
+    {
+        location.href = "cadastrar_produto.html";
+    };
+};
