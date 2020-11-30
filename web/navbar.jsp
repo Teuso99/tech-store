@@ -52,6 +52,8 @@
                                 <a class="nav-link dropdown-toggle text-light" href="#" id="dropdown01" 
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><% out.print(usuario); %></a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown01" id="userMenu">
+                                    <a class="dropdown-item" href="EditarCliente">Editar Perfil</a>
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="Logout">Logout</a>
                                 </div>
                             </li>
