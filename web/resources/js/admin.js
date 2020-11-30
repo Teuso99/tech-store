@@ -9,4 +9,9 @@ window.onload = function()
     {
         location.href = "cadastrar_produto.html";
     };
+
+    document.getElementById("adicionarFuncionario").onclick = function ()
+    {
+        location.href = "cadastrar_funcionario.html";
+    };
 };
