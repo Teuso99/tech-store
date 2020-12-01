@@ -1,5 +1,6 @@
 package cadastros;
 
+import dao.Dao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -7,10 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "Logout", urlPatterns = {"/Logout"})
-public class Logout extends HttpServlet {
+@WebServlet(name = "UpdateFuncionario", urlPatterns = {"/UpdateFuncionario"})
+public class UpdateFuncionario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -26,10 +26,41 @@ public class Logout extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter())
         {
-            HttpSession sessao = request.getSession();
-            sessao.invalidate();
+            Dao dao = new Dao();
             
-            response.sendRedirect("index.html");
+            if(dao.connect())
+            {
+                try
+                {
+                    dao.createPreparedStatement("update funcionario set nome = ?,cpf = ?,idade = ?,email = ?,senha = ? where id = ?");
+                    dao.setString(1, request.getParameter("nome"));
+                    dao.setString(2, request.getParameter("cpf"));
+                    dao.setString(3, request.getParameter("idade"));
+                    dao.setString(4, request.getParameter("email"));
+                    dao.setString(5, request.getParameter("senha"));
+                    dao.setString(6, request.getServletContext().getAttribute("id").toString());
+                    
+                    dao.execute();
+                    dao.close();
+                    
+                    request.getServletContext().removeAttribute("id");
+                    request.getServletContext().removeAttribute("nome");
+                    request.getServletContext().removeAttribute("cpf");
+                    request.getServletContext().removeAttribute("idade");
+                    request.getServletContext().removeAttribute("email");
+                    request.getServletContext().removeAttribute("senha");
+                    
+                    response.sendRedirect("admin.html");
+                }
+                catch(Exception e)
+                {
+                    out.print("Erro: "+e);
+                }
+            }
+            else
+            {
+                out.print("Erro no acesso da informação."+dao.getErro());
+            }
         }
     }
 

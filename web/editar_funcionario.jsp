@@ -17,19 +17,17 @@
         <script src="resources/js/bootstrap.min.js"></script>
         <script src="resources/js/navbar.js"></script>
                 
-        <title>Editar Perfil</title>
+        <title>Editar Funcionário</title>
     </head>
 
     <body>
         <%
-            int id = Integer.parseInt(session.getAttribute("id").toString());
-            String nome = (String)session.getAttribute("nome");
-            String email = (String)session.getAttribute("email");
-            String endereco = (String)session.getAttribute("endereco");
-            String cep = (String)session.getAttribute("cep");
-            String cpf = (String)session.getAttribute("cpf");
-            String senha = (String)session.getAttribute("senha");
-            int idade = Integer.parseInt(session.getAttribute("idade").toString());
+            int id = Integer.parseInt(getServletContext().getAttribute("id").toString());
+            String nome = (String)getServletContext().getAttribute("nome");
+            String email = (String)getServletContext().getAttribute("email");
+            String cpf = (String)getServletContext().getAttribute("cpf");
+            String senha = (String)getServletContext().getAttribute("senha");
+            int idade = Integer.parseInt(getServletContext().getAttribute("idade").toString());
         %>
         
         <!-- Navbar -->
@@ -40,12 +38,12 @@
         <div class="container">
             <div class="py-5 text-center">
                 <h2>Formulário de Cadastro</h2>
-                <p class="lead">Insira suas informações abaixo para atualizar seu cadastro no sistema.</p>
+                <p class="lead">Insira as informações abaixo para atualizar o cadastro no sistema.</p>
             </div>
           
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Informações pessoais</h4>
-                <form method="POST" action="UpdateCliente">
+                <form method="POST" action="UpdateFuncionario">
 
                     <div class="mb-3">
                         <label for="nome">Nome completo</label>
@@ -62,26 +60,17 @@
                         <input type="password" class="form-control" id="senha" name="senha" value="<%out.print(senha);%>" required>
                     </div>
           
-                    <div class="mb-3">
-                        <label for="endereco">Endereço</label>
-                        <input type="text" class="form-control" id="endereco" name="endereco" value="<%out.print(endereco);%>">
-                    </div>
           
                     <div class="row">
                         
-                        <div class="col-md-5 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="idade">Idade</label>
                             <input type="number" class="form-control" id="idade" name="idade" value="<%out.print(idade);%>" required>
                         </div>
                     
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="cpf">CPF</label>
                             <input type="number" class="form-control" id="cpf" name="cpf" value="<%out.print(cpf);%>" required>
-                        </div>
-
-                        <div class="col-md-3 mb-3">
-                            <label for="cep">CEP</label>
-                            <input type="number" class="form-control" id="cep" name="cep" value="<%out.print(cep);%>">
                         </div>
                     </div>
                 

@@ -14,4 +14,9 @@ window.onload = function()
     {
         location.href = "lista_cliente.jsp";
     };
+
+    document.getElementById("listaFuncionario").onclick = function ()
+    {
+        location.href = "lista_funcionario.jsp";
+    };
 };

@@ -1,16 +1,17 @@
 package cadastros;
 
+import dao.Dao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "Logout", urlPatterns = {"/Logout"})
-public class Logout extends HttpServlet {
+@WebServlet(name = "EditarFuncionario", urlPatterns = {"/EditarFuncionario"})
+public class EditarFuncionario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -26,10 +27,51 @@ public class Logout extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter())
         {
-            HttpSession sessao = request.getSession();
-            sessao.invalidate();
+            String id = request.getParameter("id");
             
-            response.sendRedirect("index.html");
+            Dao dao = new Dao();
+                
+            if(dao.connect())
+            {
+                try
+                {
+                       
+                    dao.createPreparedStatement("select nome,cpf,idade,email,senha from funcionario where id=?");
+                    dao.setString(1, id);
+                    ResultSet rs = dao.executeQuery();
+                        
+                    if(rs.next())
+                    {
+                        String nome = rs.getString("nome");
+                        String cpf = rs.getString("cpf");
+                        int idade = rs.getInt("idade");
+                        String email = rs.getString("email");
+                        String senha = rs.getString("senha");
+                            
+                        request.getServletContext().setAttribute("id", id);
+                        request.getServletContext().setAttribute("nome", nome);
+                        request.getServletContext().setAttribute("cpf", cpf);
+                        request.getServletContext().setAttribute("email", email);
+                        request.getServletContext().setAttribute("idade", idade);
+                        request.getServletContext().setAttribute("senha", senha);
+                            
+                        response.sendRedirect("editar_funcionario.jsp");
+                    }
+                        
+                    rs.close();
+                    dao.close();
+                }
+                catch(Exception e)
+                {
+                    out.print("Erro: "+e);
+                }
+                    
+                    
+            }
+            else
+            {
+                out.print("Erro: "+dao.getErro());
+            }    
         }
     }
 
