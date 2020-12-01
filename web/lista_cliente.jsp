@@ -17,17 +17,23 @@
         <!-- Referências arquivos JS -->
         <script src="resources/js/jquery-3.5.1.min.js"></script>
         <script src="resources/js/bootstrap.min.js"></script>
+        <script src="resources/js/navbar.js"></script>
                 
         <title>Lista de Cliente</title>
     </head>
     <body>
         
-        <div class="py-5 text-center">
+        <!-- Navbar -->
+        <div id="navbar">
+
+        </div>
+        
+        <div class="py-5 text-center" style="margin-top:5%">
                 <h2>Lista de Clientes</h2>
                 <p class="lead">Abaixo se encontra a lista de todos os clientes cadastrados no sistema.</p>
         </div>
         
-        <main class="container align-middle" style="margin-top:5%">
+        <main class="container align-middle">
             <table class="table">
                 <thead>
                     <tr>

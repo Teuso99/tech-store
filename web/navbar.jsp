@@ -41,16 +41,18 @@
                     <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Procurar</button>
                 </form>
 
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#">Carrinho</a>
-                    </li>
-                    
+                
+                <ul class="navbar-nav">    
                     <c:choose>
                         <c:when test = "${tipo == 'cliente'}">
+                            
+                            <li class="nav-item">
+                                <a class="nav-link text-light" href="#">Carrinho</a>
+                            </li>
+                            
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-light" href="#" id="dropdown01" 
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><% out.print(usuario); %></a>
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><% out.print(usuario); %></a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown01" id="userMenu">
                                     <a class="dropdown-item" href="EditarCliente">Editar Perfil</a>
                                     <div class="dropdown-divider"></div>
@@ -60,6 +62,11 @@
                         </c:when>
                         
                         <c:when test = "${tipo == 'funcionario'}">
+                            
+                            <li class="nav-item">
+                                <a class="nav-link text-light" href="admin.html">Controle</a>
+                            </li>
+                            
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-light" href="#" id="dropdown01" 
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><% out.print(usuario); %></a>

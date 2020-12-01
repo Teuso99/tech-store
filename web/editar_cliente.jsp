@@ -15,6 +15,7 @@
         <!-- Referências arquivos JS -->
         <script src="resources/js/jquery-3.5.1.min.js"></script>
         <script src="resources/js/bootstrap.min.js"></script>
+        <script src="resources/js/navbar.js"></script>
                 
         <title>Editar Perfil</title>
     </head>
@@ -30,6 +31,12 @@
             String senha = (String)session.getAttribute("senha");
             int idade = Integer.parseInt(session.getAttribute("idade").toString());
         %>
+        
+        <!-- Navbar -->
+        <div id="navbar">
+
+        </div>
+        
         <div class="container">
             <div class="py-5 text-center">
                 <h2>Formulário de Cadastro</h2>
