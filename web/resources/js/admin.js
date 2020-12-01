@@ -14,4 +14,9 @@ window.onload = function()
     {
         location.href = "cadastrar_funcionario.html";
     };
+
+    document.getElementById("listaCliente").onclick = function ()
+    {
+        location.href = "lista_cliente.jsp";
+    };
 };
