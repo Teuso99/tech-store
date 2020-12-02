@@ -1,23 +1,17 @@
 package cadastros;
 
 import dao.Dao;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
-@WebServlet(name = "CadastroProduto", urlPatterns = {"/CadastroProduto"})
-@MultipartConfig
-public class CadastroProduto extends HttpServlet {
+@WebServlet(name = "EditarProduto", urlPatterns = {"/EditarProduto"})
+public class EditarProduto extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,52 +27,50 @@ public class CadastroProduto extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter())
         {
-            Dao dao = new Dao();
+            String id = request.getParameter("id");
             
+            Dao dao = new Dao();
+                
             if(dao.connect())
             {
                 try
-                {                    
-                    try
-                    {
+                {
+                       
+                    dao.createPreparedStatement("select nome,categoria,preco,descricao,foto from produto where id=?");
+                    dao.setString(1, id);
+                    ResultSet rs = dao.executeQuery();
                         
-                    }
-                    catch(Exception e)
+                    if(rs.next())
                     {
-                        out.print("Erro: " + e);
+                        String nome = rs.getString("nome");
+                        String categoria = rs.getString("categoria");
+                        String preco = rs.getString("preco");
+                        String descricao = rs.getString("descricao");
+                        String foto = rs.getString("foto");
+                            
+                        request.getServletContext().setAttribute("id", id);
+                        request.getServletContext().setAttribute("nome", nome);
+                        request.getServletContext().setAttribute("categoria", categoria);
+                        request.getServletContext().setAttribute("preco", preco);
+                        request.getServletContext().setAttribute("descricao", descricao);
+                        request.getServletContext().setAttribute("foto", foto);
+                            
+                        response.sendRedirect("editar_produto.jsp");
                     }
-                    //Converter o preço para o campo decimal no bd
-                        String preco = request.getParameter("preco");
-                        preco = preco.replace(",",".");
-
-                        //Trabalhando com a foto
-                        Part filePart = request.getPart("foto");
-                        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-
-
-                        File uploads = new File("/Users/mateu/Documents/NetBeansProjects/tech-store/web/resources/img");
-                        File file = File.createTempFile("produto-",".jpg", uploads);
-
-                        Files.copy(filePart.getInputStream(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    
-                    
-                    dao.createPreparedStatement("insert into produto(nome,categoria,preco,descricao,foto)values(?,?,?,?,?)");
-                    
-                    dao.setString(1, request.getParameter("nome"));
-                    dao.setString(2, request.getParameter("categoria"));
-                    dao.setString(3, preco);
-                    dao.setString(4, request.getParameter("descricao"));
-                    dao.setString(5, "resources/img/"+file.getName());
-                    
-                    dao.execute();
+                        
+                    rs.close();
                     dao.close();
-                    
-                    response.sendRedirect("admin.html");
                 }
                 catch(Exception e)
                 {
-                    out.println("Erro: " + e);
+                    out.print("Erro: "+e);
                 }
+                    
+                    
+            }
+            else
+            {
+                out.print("Erro: "+dao.getErro());
             }
         }
     }

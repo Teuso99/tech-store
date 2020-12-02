@@ -18,8 +18,8 @@
         <script src="resources/js/jquery-3.5.1.min.js"></script>
         <script src="resources/js/bootstrap.min.js"></script>
         <script src="resources/js/navbar.js"></script>
-                
-        <title>Lista de Funcionário</title>
+                        
+        <title>Lista de Produtos</title>
     </head>
     <body>
         
@@ -29,8 +29,8 @@
         </div>
         
         <div class="py-5 text-center" style="margin-top:5%">
-                <h2>Lista de Funcionários</h2>
-                <p class="lead">Abaixo se encontra a lista de todos os funcionários cadastrados no sistema.</p>
+                <h2>Lista de Produtos</h2>
+                <p class="lead">Abaixo se encontra a lista de todos os produtos cadastrados no sistema.</p>
         </div>
         
         <main class="container align-middle">
@@ -38,9 +38,10 @@
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Categoria</th>
                         <th scope="col">Nome</th>
-                        <th scope="col">CPF</th>
-                        <th scope="col">E-mail</th>
+                        <th scope="col">Preço</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
@@ -51,24 +52,29 @@
                             {
                                try
                                {
-                                    dao.createPreparedStatement("select id,nome,cpf,email from funcionario");
+                                    dao.createPreparedStatement("select id,nome,foto,preco,categoria from produto");
                                     ResultSet rs = dao.executeQuery();
 
                                     while(rs.next())
                                     {
                                         int id = rs.getInt("id");
                                         String nome = rs.getString("nome");
-                                        String cpf = rs.getString("cpf");
-                                        String email = rs.getString("email");
+                                        String foto = rs.getString("foto");
+                                        String preco = rs.getString("preco");
+                                        String categoria = rs.getString("categoria");
                     %>
 
                     <tr>
                         <th scope="row"><% out.print(id); %></th>
+                        <td>
+                            <img src="<%=foto%>" class="mr-3" alt="..." style="width: 64px; height: 64px">  
+                        </td>
+                        <td><% out.print(categoria); %></td>
                         <td><% out.print(nome); %></td>
-                        <td><% out.print(cpf); %></td>
-                        <td><% out.print(email); %></td>
-                        <td><a class="btn btn-primary" role="button" href="EditarFuncionario?id=<%=id%>">Editar</a> <a class="btn btn-danger" role="button" href="ExcluirFuncionario?id=<%=id%>">Excluir</a></td>
+                        <td>R$ <% out.print(preco); %></td>
+                        <td><a class="btn btn-primary" role="button" href="EditarProduto?id=<%=id%>">Editar</a> <a class="btn btn-danger" role="button" href="ExcluirProduto?id=<%=id%>">Excluir</a></td>
                     </tr>
+
                     <%
                                     };
 

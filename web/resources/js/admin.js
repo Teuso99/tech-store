@@ -19,4 +19,9 @@ window.onload = function()
     {
         location.href = "lista_funcionario.jsp";
     };
+
+    document.getElementById("listaProduto").onclick = function ()
+    {
+        location.href = "lista_produto.jsp";
+    };
 };

@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-@WebServlet(name = "CadastroProduto", urlPatterns = {"/CadastroProduto"})
+@WebServlet(name = "UpdateProduto", urlPatterns = {"/UpdateProduto"})
 @MultipartConfig
-public class CadastroProduto extends HttpServlet {
+public class UpdateProduto extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,26 +33,18 @@ public class CadastroProduto extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter())
         {
+            //if part != null
+            
             Dao dao = new Dao();
             
             if(dao.connect())
             {
                 try
-                {                    
-                    try
+                {
+                    Part filePart = request.getPart("foto");
+                    
+                    if(filePart.getSize() != 0)
                     {
-                        
-                    }
-                    catch(Exception e)
-                    {
-                        out.print("Erro: " + e);
-                    }
-                    //Converter o preço para o campo decimal no bd
-                        String preco = request.getParameter("preco");
-                        preco = preco.replace(",",".");
-
-                        //Trabalhando com a foto
-                        Part filePart = request.getPart("foto");
                         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
 
@@ -60,25 +52,51 @@ public class CadastroProduto extends HttpServlet {
                         File file = File.createTempFile("produto-",".jpg", uploads);
 
                         Files.copy(filePart.getInputStream(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        
+                        dao.createPreparedStatement("update produto set nome = ?,categoria = ?,preco = ?,descricao = ?, foto = ? where id = ?");
+                    
+                        dao.setString(1, request.getParameter("nome"));
+                        dao.setString(2, request.getParameter("categoria"));
+                        dao.setString(3, request.getParameter("preco"));
+                        dao.setString(4, request.getParameter("descricao"));
+                        dao.setString(5, "resources/img/"+file.getName());
+                        dao.setString(6, request.getServletContext().getAttribute("id").toString());
+
+                        dao.execute();
+                        dao.close();
+                    }
+                    else
+                    {
+                        dao.createPreparedStatement("update produto set nome = ?,categoria = ?,preco = ?,descricao = ? where id = ?");
+                    
+                        dao.setString(1, request.getParameter("nome"));
+                        dao.setString(2, request.getParameter("categoria"));
+                        dao.setString(3, request.getParameter("preco"));
+                        dao.setString(4, request.getParameter("descricao"));
+                        dao.setString(5, request.getServletContext().getAttribute("id").toString());
+
+                        dao.execute();
+                        dao.close();
+                    }
                     
                     
-                    dao.createPreparedStatement("insert into produto(nome,categoria,preco,descricao,foto)values(?,?,?,?,?)");
-                    
-                    dao.setString(1, request.getParameter("nome"));
-                    dao.setString(2, request.getParameter("categoria"));
-                    dao.setString(3, preco);
-                    dao.setString(4, request.getParameter("descricao"));
-                    dao.setString(5, "resources/img/"+file.getName());
-                    
-                    dao.execute();
-                    dao.close();
+                    request.getServletContext().removeAttribute("id");
+                    request.getServletContext().removeAttribute("nome");
+                    request.getServletContext().removeAttribute("categoria");
+                    request.getServletContext().removeAttribute("preco");
+                    request.getServletContext().removeAttribute("descricao");
+                    request.getServletContext().removeAttribute("foto");
                     
                     response.sendRedirect("admin.html");
                 }
                 catch(Exception e)
                 {
-                    out.println("Erro: " + e);
+                    out.print("Erro: "+e);
                 }
+            }
+            else
+            {
+                out.print("Erro no acesso da informação."+dao.getErro());
             }
         }
     }
