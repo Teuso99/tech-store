@@ -78,13 +78,10 @@
                         
                         <c:otherwise>
                             <script>
-                                window.onload = function()
-                                { 
                                     document.getElementById("btnLogin").onclick = function ()
                                     {
                                         location.href = "login.html";
                                     }; 
-                                };
                             </script>
                             
                             <li class="nav-item">
