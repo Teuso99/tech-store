@@ -18,7 +18,7 @@
         <script src="resources/js/bootstrap.min.js"></script>
         <script src="resources/js/navbar.js"></script>
                 
-        <title>Lista de Cliente</title>
+        <title>Lista de Produtos</title>
     </head>
     <body>
         
@@ -28,18 +28,17 @@
         </div>
         
         <div class="py-5 text-center" style="margin-top:5%">
-                <h2>Lista de Clientes</h2>
-                <p class="lead">Abaixo se encontra a lista de todos os clientes cadastrados no sistema.</p>
+                <h2>Lista de Produtos</h2>
+                <p class="lead">Abaixo se encontra a lista de todos os pedidos realizados por clientes cadastrados no sistema.</p>
         </div>
         
         <main class="container align-middle">
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">CPF</th>
-                        <th scope="col">E-mail</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Produto</th>
                     </tr>
                 </thead>
                     <%
@@ -49,26 +48,22 @@
                             {
                                try
                                {
-                                    dao.createPreparedStatement("select nome,cpf,email from cliente");
+                                    dao.createPreparedStatement("select cliente.nome,produto.nome,pedido.id from cliente,produto,pedido where cliente.id = pedido.idcliente and produto.id = pedido.idproduto");
                                     ResultSet rs = dao.executeQuery();
-                                    
-                                    int i = 1;
 
                                     while(rs.next())
                                     {
-                                        String nome = rs.getString("nome");
-                                        String cpf = rs.getString("cpf");
-                                        String email = rs.getString("email");
+                                        String nomeCliente = rs.getString("cliente.nome");
+                                        String nomeProduto = rs.getString("produto.nome");
+                                        String id = rs.getString("pedido.id");
                     %>
 
                     <tr>
-                        <th scope="row"><% out.print(i); %></th>
-                        <td><% out.print(nome); %></td>
-                        <td><% out.print(cpf); %></td>
-                        <td><% out.print(email); %></td>
+                        <th scope="row"><% out.print(id); %></th>
+                        <td><% out.print(nomeCliente); %></td>
+                        <td><% out.print(nomeProduto); %></td>
                     </tr>
                     <%
-                                        i++;
                                     };
 
                                     rs.close();

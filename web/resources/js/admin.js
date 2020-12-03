@@ -24,4 +24,9 @@ window.onload = function()
     {
         location.href = "lista_produto.jsp";
     };
+
+    document.getElementById("listaPedido").onclick = function ()
+    {
+        location.href = "lista_pedido.jsp";
+    };
 };
