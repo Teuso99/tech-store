@@ -1,3 +1,5 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="dao.Dao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -10,45 +12,54 @@
         <div class="card">
             <h5 class="card-header">Novidades</h5>
             <div class="card-body">
-                <!-- Grid de produtos -->
-                <div class="row row-cols-1 row-cols-md-3">
-                    <!-- Produtos -->
-                    <div class="col mb-2">
-                        <div class="card mr-sm-4" style="width: 14rem;">
-                            <img src="resources/img/placeholder4.jpg" class="card-img-top">
-                            <div class="card-body">
-                                <h5 class="card-title">Cartela 30 ovos</h5>
-                                <p class="card-text">R$ 10,00</p>
-                                <a href="#" class="btn btn-primary">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
                     
-                    <div class="col mb-2">
-                        <div class="card mr-sm-4" style="width: 14rem;">
-                            <img src="resources/img/placeholder4.jpg" class="card-img-top">
-                            <div class="card-body">
-                                <h5 class="card-title">Naruto N64</h5>
-                                <p class="card-text">R$ 1.000,00</p>
-                                <a href="#" class="btn btn-primary">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col mb-2">
-                        <div class="card mr-sm-4" style="width: 14rem;">
-                            <img src="resources/img/placeholder4.jpg" class="card-img-top">
-                            <div class="card-body">
-                                <h5 class="card-title">KEKW</h5>
-                                <p class="card-text">R$ 420,69</p>
-                                <a href="#" class="btn btn-primary">Comprar</a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
+                <%
+                Dao dao = new Dao();
+
+                if(dao.connect())
+                {
+                    try
+                    {
+                        dao.createPreparedStatement("select id,nome,foto,preco,descricao from produto order by id desc limit 5");
+                        ResultSet rs = dao.executeQuery();
+
+                        while(rs.next())
+                        {
+                            int id = rs.getInt("id");
+                            String nome = rs.getString("nome");
+                            String foto = rs.getString("foto");
+                            String preco = rs.getString("preco");
+                            String descricao = rs.getString("descricao");
+                %>
                 
-            </div>
+                    <!-- Produtos -->
+                    <div class="media mt-2">
+                        <img src="<%=foto%>" class="mr-3" alt="..." style="width: 64px; height: 64px">
+                        <div class="media-body">
+                            <h5 class="mt-0"><% out.print(nome); %></h5>
+                            <p><% out.print(descricao); %></p>
+                            <h5>R$ <% out.print(preco); %></h5>
+                            <a class="btn btn-primary" role="button" href="carrinho.jsp?id=<%=id%>">Comprar</a>
+                        </div>
+                    </div>
+            
+                <%
+                        };
+
+                        rs.close();
+                        dao.close();
+                    }
+                    catch(Exception e)
+                    {
+                        out.print("Erro: "+e);
+                    }
+                }
+                else
+                {
+                    out.print("Erro: "+dao.getErro());
+                }
+                %>    
+                </div>
         </div>
     </body>
 </html>

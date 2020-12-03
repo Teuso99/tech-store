@@ -45,7 +45,7 @@ public class Login extends HttpServlet {
                     
                     if(checked == null)
                     {
-                        dao.createPreparedStatement("select nome from cliente where email=? and senha=?");
+                        dao.createPreparedStatement("select id,nome from cliente where email=? and senha=?");
                         dao.setString(1, request.getParameter("email"));
                         dao.setString(2, request.getParameter("senha"));
                         ResultSet rs = dao.executeQuery();
@@ -54,9 +54,11 @@ public class Login extends HttpServlet {
                         {
                             String tipo = "cliente";
                             String nome = rs.getString("nome");
+                            String id = rs.getString("id");
                             request.getSession().setAttribute("email", request.getParameter("email"));
                             request.getSession().setAttribute("tipo", tipo);
                             request.getSession().setAttribute("nome", nome);
+                            request.getSession().setAttribute("id",id);
                             
                             response.sendRedirect("index.html");
                         }
@@ -70,7 +72,7 @@ public class Login extends HttpServlet {
                     }
                     else
                     {
-                        dao.createPreparedStatement("select nome from funcionario where email=? and senha=?");
+                        dao.createPreparedStatement("select id,nome from funcionario where email=? and senha=?");
                         dao.setString(1, request.getParameter("email"));
                         dao.setString(2, request.getParameter("senha"));
                         ResultSet rs = dao.executeQuery();
@@ -78,9 +80,11 @@ public class Login extends HttpServlet {
                         if(rs.next())
                         {
                             String tipo = "funcionario";
+                            String id = rs.getString("id");
                             request.getSession().setAttribute("email", request.getParameter("email"));
                             request.getSession().setAttribute("tipo", tipo);
                             request.getSession().setAttribute("nome", rs.getString("nome"));
+                            request.getSession().setAttribute("id",id);
                             
                             response.sendRedirect("admin.html");
                         }
