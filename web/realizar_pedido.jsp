@@ -22,8 +22,18 @@
     <body>
         
         <%
-            String id = request.getParameter("id");
-            request.getServletContext().setAttribute("id", id);
+            if(request.getSession().getAttribute("tipo") == null)
+            {
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Apenas usuários cadastrados podem realizar compras.');");
+                out.println("location='index.html';");
+                out.println("</script>");
+            }
+            else
+            {
+            
+                String id = request.getParameter("id");
+                request.getServletContext().setAttribute("id", id);
         %>
         
         
@@ -70,5 +80,8 @@
             </div>
 
         </div>
+        <%
+            }
+        %>
     </body>
 </html>

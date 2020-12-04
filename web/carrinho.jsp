@@ -23,7 +23,7 @@
         <!-- Navbar -->
         <div id="navbar">
 
-        </div>
+        </div>     
         
         <div class="py-5 text-center" style="margin-top:5%">
                 <h2>Carrinho</h2>
