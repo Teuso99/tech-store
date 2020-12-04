@@ -68,7 +68,7 @@
                             <a class="btn btn-primary" role="button" href="carrinho.jsp?id=<%=id%>">Comprar</a>
                         </div>
                     </div>
-            
+                    <hr>
                 <%
                             }while(rs.next());
                         }

@@ -38,7 +38,7 @@
                                 {
                                     try
                                     {
-                                        dao.createPreparedStatement("select categoria from produto");
+                                        dao.createPreparedStatement("select distinct categoria from produto;");
                                         ResultSet rs = dao.executeQuery();
 
                                         while(rs.next())

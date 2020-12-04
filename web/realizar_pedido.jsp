@@ -37,7 +37,7 @@
                 <h2>Pagamento</h2>
                 <p class="lead">Insira as informações de pagamento para realizar sua compra.</p>
             </div>
-          
+            
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Informações do cartão</h4>
                 <form method="POST" action="RealizarPedido">
