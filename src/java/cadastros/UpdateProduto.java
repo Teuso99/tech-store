@@ -87,7 +87,10 @@ public class UpdateProduto extends HttpServlet {
                     request.getServletContext().removeAttribute("descricao");
                     request.getServletContext().removeAttribute("foto");
                     
-                    response.sendRedirect("admin.html");
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Produto atualizado com sucesso!');");
+                    out.println("location='admin.html';");
+                    out.println("</script>");
                 }
                 catch(Exception e)
                 {
@@ -96,7 +99,10 @@ public class UpdateProduto extends HttpServlet {
             }
             else
             {
-                out.print("Erro no acesso da informação."+dao.getErro());
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Erro na hora de atualizar o produto.');");
+                out.println("location='admin.html';");
+                out.println("</script>");
             }
         }
     }

@@ -50,7 +50,10 @@ public class UpdateFuncionario extends HttpServlet {
                     request.getServletContext().removeAttribute("email");
                     request.getServletContext().removeAttribute("senha");
                     
-                    response.sendRedirect("admin.html");
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Funcionário atualizado com sucesso!');");
+                    out.println("location='admin.html';");
+                    out.println("</script>");
                 }
                 catch(Exception e)
                 {
@@ -59,7 +62,10 @@ public class UpdateFuncionario extends HttpServlet {
             }
             else
             {
-                out.print("Erro no acesso da informação."+dao.getErro());
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Erro na hora de atualizar o funcionário.');");
+                out.println("location='admin.html';");
+                out.println("</script>");
             }
         }
     }

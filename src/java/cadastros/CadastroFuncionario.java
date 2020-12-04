@@ -42,7 +42,10 @@ public class CadastroFuncionario extends HttpServlet {
                     dao.execute();
                     dao.close();
                     
-                    response.sendRedirect("admin.html");
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Funcionário cadastrado com sucesso!');");
+                    out.println("location='admin.html';");
+                    out.println("</script>");
                 }
                 catch(Exception e)
                 {
@@ -51,7 +54,10 @@ public class CadastroFuncionario extends HttpServlet {
             }
             else
             {
-                out.print("Erro no acesso da informação."+dao.getErro());
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Erro no cadastro do funcionário.');");
+                out.println("location='admin.html';");
+                out.println("</script>");
             }
         }
     }

@@ -45,11 +45,17 @@ public class ExcluirProduto extends HttpServlet {
                     out.print("Erro: "+e);
                 }
                 
-                response.sendRedirect("admin.html");
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Produto excluído com sucesso!');");
+                out.println("location='admin.html';");
+                out.println("</script>");
             }
             else
             {
-                out.print("Erro no acesso da informação."+dao.getErro());
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Erro na exclusão do produto.');");
+                out.println("location='admin.html';");
+                out.println("</script>");
             }
         }
     }

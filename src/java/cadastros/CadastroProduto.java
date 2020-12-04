@@ -73,12 +73,22 @@ public class CadastroProduto extends HttpServlet {
                     dao.execute();
                     dao.close();
                     
-                    response.sendRedirect("admin.html");
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Produto cadastrado com sucesso!');");
+                    out.println("location='admin.html';");
+                    out.println("</script>");
                 }
                 catch(Exception e)
                 {
                     out.println("Erro: " + e);
                 }
+            }
+            else
+            {
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Erro no cadastro do produto.');");
+                out.println("location='admin.html';");
+                out.println("</script>");
             }
         }
     }

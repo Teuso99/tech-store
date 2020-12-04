@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cadastros;
 
 import dao.Dao;
@@ -15,10 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author mateu
- */
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
 
@@ -64,7 +55,10 @@ public class Login extends HttpServlet {
                         }
                         else
                         {
-                            out.println("Usuário/senha inválido");
+                            out.println("<script type=\"text/javascript\">");
+                            out.println("alert('Usuário/senha inválido');");
+                            out.println("location='index.html';");
+                            out.println("</script>");
                         }
                         
                         rs.close();
@@ -90,7 +84,10 @@ public class Login extends HttpServlet {
                         }
                         else
                         {
-                            out.println("Usuário/senha inválido");
+                            out.println("<script type=\"text/javascript\">");
+                            out.println("alert('Usuário/senha inválido ou você não é um funcionário');");
+                            out.println("location='index.html';");
+                            out.println("</script>");
                         }
                         
                         rs.close();

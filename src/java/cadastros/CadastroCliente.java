@@ -45,7 +45,10 @@ public class CadastroCliente extends HttpServlet {
                     dao.execute();
                     dao.close();
                     
-                    response.sendRedirect("index.html");
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Cadastro realizado com sucesso!');");
+                    out.println("location='index.html';");
+                    out.println("</script>");
                 }
                 catch(Exception e)
                 {
@@ -54,7 +57,10 @@ public class CadastroCliente extends HttpServlet {
             }
             else
             {
-                out.print("Erro no acesso da informação."+dao.getErro());
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Erro na realização do cadastro.');");
+                out.println("location='index.html';");
+                out.println("</script>");
             }
             
            

@@ -4,22 +4,44 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
+        <!-- Tags meta - charset para utilizar utf-8 e 
+            viewport para utilização da responsividade com Bootstrap -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Referências arquivos CSS -->
+        <link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="resources/css/style.css" rel="stylesheet" />
+        
+        <!-- Referências arquivos JS -->
+        <script src="resources/js/jquery-3.5.1.min.js"></script>
+        <script src="resources/js/bootstrap.min.js"></script>
+        <script src="resources/js/navbar.js"></script>
+        
+        <title>Resultados da busca</title>
     </head>
     <body>
-        <div class="card">
-            <h5 class="card-header">Novidades</h5>
+        <!-- Navbar -->
+        <div id="navbar">
+
+        </div>
+        
+        <div class="card" style="margin-top:8%;">
+            <h5 class="card-header">Resultados da pesquisa</h5>
             <div class="card-body">
                     
                 <%
                 Dao dao = new Dao();
-
+                
+                String busca = "%"+request.getParameter("busca")+"%";
+                
                 if(dao.connect())
                 {
                     try
                     {
-                        dao.createPreparedStatement("select id,nome,foto,preco,descricao from produto order by id desc limit 5");
+                        dao.createPreparedStatement("select id,nome,foto,preco,descricao from produto where nome like ? or categoria like ? order by id desc limit 5;");
+                        dao.setString(1,busca);
+                        dao.setString(2,busca);
+                        
                         ResultSet rs = dao.executeQuery();
 
                         while(rs.next())
@@ -45,6 +67,10 @@
                 <%
                         };
 
+                        if(!rs.next())
+                        {
+                            out.println("Não existe produto correspondente a sua pesquisa.");
+                        }
                         rs.close();
                         dao.close();
                     }
@@ -55,7 +81,7 @@
                 }
                 else
                 {
-                    out.print("Não existe produtos correspondentes a essa categoria.");
+                    out.print("Erro na pesquisa.");
                 }
                 %>    
                 </div>
