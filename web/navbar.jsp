@@ -1,3 +1,5 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="dao.Dao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -29,9 +31,39 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-light" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Produtos</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" href="#">Produto1</a>
-                            <a class="dropdown-item" href="#">Produto2</a>
-                            <a class="dropdown-item" href="#">Produto3</a>
+                            <%
+                                Dao dao = new Dao();
+
+                                if(dao.connect())
+                                {
+                                    try
+                                    {
+                                        dao.createPreparedStatement("select categoria from produto");
+                                        ResultSet rs = dao.executeQuery();
+
+                                        while(rs.next())
+                                        {
+                                            String categoria = rs.getString("categoria");
+                            %>
+                            <a class="dropdown-item" href="produtos.jsp?categoria=<%=categoria%>"><% out.print(categoria); %></a>
+                            <%
+                                        };
+
+                                        rs.close();
+                                        dao.close();
+                                    }
+                                    catch(Exception e)
+                                    {
+                                        out.print("Erro: "+e);
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    out.print("Erro: "+dao.getErro());
+                                }
+                            %>
                         </div>
                     </li>
                 </ul>

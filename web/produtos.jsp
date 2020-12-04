@@ -17,7 +17,9 @@
         <script src="resources/js/bootstrap.min.js"></script>
         <script src="resources/js/navbar.js"></script>
         
-        <title>Resultados da busca</title>
+        <% String categoria = request.getParameter("categoria"); %>
+        
+        <title>Categoria: <% out.print(categoria); %></title>
     </head>
     <body>
         <!-- Navbar -->
@@ -26,27 +28,24 @@
         </div>
         
         <div class="card" style="margin-top:8%;">
-            <h5 class="card-header">Resultados da pesquisa</h5>
+            <h5 class="card-header">Categoria: <% out.print(categoria); %></h5>
             <div class="card-body">
                     
                 <%
                 Dao dao = new Dao();
                 
-                String busca = "%"+request.getParameter("busca")+"%";
-                
                 if(dao.connect())
                 {
                     try
                     {
-                        dao.createPreparedStatement("select id,nome,foto,preco,descricao from produto where nome like ? or categoria like ? order by id desc;");
-                        dao.setString(1,busca);
-                        dao.setString(2,busca);
+                        dao.createPreparedStatement("select id,nome,foto,preco,descricao from produto where categoria = ? order by id desc;");
+                        dao.setString(1,categoria);
                         
                         ResultSet rs = dao.executeQuery();
 
                         if(!rs.next())
                         {
-                            out.println("Não existe produto correspondente a sua pesquisa.");
+                            out.println("Não existe produto correspondente a categoria.");
                         }
                         else
                         {
@@ -73,7 +72,7 @@
                 <%
                             }while(rs.next());
                         }
-                        
+
                         rs.close();
                         dao.close();
                     }
@@ -84,7 +83,7 @@
                 }
                 else
                 {
-                    out.print("Erro na pesquisa.");
+                    out.print("Erro na requisição de dados.");
                 }
                 %>    
                 </div>
