@@ -39,6 +39,8 @@
                         <th scope="col">ID</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Produto</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Data</th>
                     </tr>
                 </thead>
                     <%
@@ -48,7 +50,7 @@
                             {
                                try
                                {
-                                    dao.createPreparedStatement("select cliente.nome,produto.nome,pedido.id from cliente,produto,pedido where cliente.id = pedido.idcliente and produto.id = pedido.idproduto");
+                                    dao.createPreparedStatement("select cliente.nome,produto.nome,pedido.id,pedido.quantidade,pedido.datapedido from cliente,produto,pedido where cliente.id = pedido.idcliente and produto.id = pedido.idproduto");
                                     ResultSet rs = dao.executeQuery();
 
                                     while(rs.next())
@@ -56,12 +58,16 @@
                                         String nomeCliente = rs.getString("cliente.nome");
                                         String nomeProduto = rs.getString("produto.nome");
                                         String id = rs.getString("pedido.id");
+                                        String qtd = rs.getString("quantidade");
+                                        String data = rs.getString("datapedido");
                     %>
 
                     <tr>
                         <th scope="row"><% out.print(id); %></th>
                         <td><% out.print(nomeCliente); %></td>
                         <td><% out.print(nomeProduto); %></td>
+                        <td><% out.print(qtd); %></td>
+                        <td><% out.print(data); %></td>
                     </tr>
                     <%
                                     };

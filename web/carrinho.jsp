@@ -20,6 +20,18 @@
         <title>Carrinho</title>
     </head>
     <body>
+        <%
+            if(request.getSession().getAttribute("tipo") == null)
+            {
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Apenas usuários cadastrados podem realizar compras.');");
+                out.println("location='index.html';");
+                out.println("</script>");
+            }
+            else
+            {
+        %>
+        
         <!-- Navbar -->
         <div id="navbar">
 
@@ -31,6 +43,7 @@
         </div>
         
         <main class="container align-middle">
+            <form method="POST" action="RealizarPedido">
             <table class="table">
                 <thead>
                     <tr>
@@ -44,6 +57,7 @@
                 
                 <%
                         String id = request.getParameter("id");
+                        request.getServletContext().setAttribute("idProduto", id);
                     
                         Dao dao = new Dao();
 
@@ -67,9 +81,9 @@
                             <img src="<%=foto%>" class="mr-3" alt="..." style="width: 64px; height: 64px">  
                         </td>
                         <td><% out.print(nome); %></td>
-                        <td><input type="number" value="1" required></td>
+                        <td><input type="number" value="1" name="qtd" required></td>
                         <td>R$ <% out.print(preco); %></td>
-                        <td><a class="btn btn-primary" role="button" href="realizar_pedido.jsp?id=<%=id%>">Comprar</a></td>
+                        <td><button class="btn btn-primary" type="submit">Comprar</button></td>
                     </tr>
 
                     <%
@@ -89,7 +103,9 @@
                             {
                                 out.print("Erro: "+dao.getErro());
                             }
+            }
                     %>
             </table>
+            </form>
     </body>
 </html>

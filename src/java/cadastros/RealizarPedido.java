@@ -3,6 +3,7 @@ package cadastros;
 import dao.Dao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,16 +29,20 @@ public class RealizarPedido extends HttpServlet {
         try (PrintWriter out = response.getWriter())
         {
             Dao dao = new Dao();
-            String idProduto = request.getServletContext().getAttribute("id").toString();
+            String idProduto = request.getServletContext().getAttribute("idProduto").toString();
             String idCliente = request.getSession().getAttribute("id").toString();
+            String qtd = request.getParameter("qtd");
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             
             if(dao.connect())
             {
                 try
                 {
-                    dao.createPreparedStatement("insert into pedido(idcliente,idproduto)values(?,?)");
+                    dao.createPreparedStatement("insert into pedido(idcliente,idproduto,quantidade,datapedido)values(?,?,?,?)");
                     dao.setString(1, idCliente);
                     dao.setString(2, idProduto);
+                    dao.setString(3, qtd);
+                    dao.setString(4, timestamp.toString());
 
                     dao.execute();
                     dao.close();
